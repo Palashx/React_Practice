@@ -1,26 +1,69 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import Todos from './components/Todos';
+import Header from './components/Layout/Header';
+import AddTodo from './components/AddTodo';
+import uuid from 'uuid';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  state = {
+    todos: [
+      {
+        id: uuid.v4(),
+        title: 'Take out the trash',
+        complete: false
+      },
+      {
+        id: uuid.v4(),
+        title: 'Make dinner',
+        complete: true
+      },
+      {
+        id: uuid.v4(),
+        title: 'Practice React',
+        complete: false
+      }
+    ]
+  }
+
+  checked = (id) => {
+    this.setState( {todos: this.state.todos.map( todo => {
+          if(todo.id === id) {
+            todo.complete = !todo.complete;
+          }
+          return todo;
+        }
+      )
+    })
+  }
+
+  addTodoItem = (title) => {
+    const newTodo ={ 
+      id: uuid.v4(),
+      title,
+      complete: false
+    }
+    this.setState({todos: [...this.state.todos, newTodo]})
+    console.log(this.state)
+  }
+
+  delTodo = (id) => {
+    this.setState( {todos: [...this.state.todos.filter( todo => todo.id !== id)] })
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <div className = 'container'> 
+          <Header />
+          <Todos todos = {this.state.todos} checked = {this.checked} delTodo = {this.delTodo}/>
+          <AddTodo addTodoItem = {this.addTodoItem}/>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
