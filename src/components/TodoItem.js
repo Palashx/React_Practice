@@ -8,7 +8,7 @@ class TodoItem extends Component {
             backgroundColor: '#f4f4f4',
             padding: '10px',
             borderBottom: '1px #ccc dotted',
-            textDecoration: this.props.todo.complete ? 'line-through' : 'none'
+            textDecoration: this.props.todo.completed ? 'line-through' : 'none'
         }
     }
 
@@ -28,7 +28,9 @@ class TodoItem extends Component {
 }
 
 TodoItem.propTypes = {
-    todo: PropTypes.object.isRequired
+    todo: PropTypes.object.isRequired,
+    checked: PropTypes.func.isRequired,
+    delTodo: PropTypes.func.isRequired
 }
 
 const btnstyle = {
